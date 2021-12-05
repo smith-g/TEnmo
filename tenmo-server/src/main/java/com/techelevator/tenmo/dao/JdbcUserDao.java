@@ -79,6 +79,12 @@ public class JdbcUserDao implements UserDao {
         return true;
     }
 
+    @Override
+    public BigDecimal getBalance(String username) {
+        return null;
+    }
+
+
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();
         user.setId(rs.getLong("user_id"));
@@ -86,6 +92,7 @@ public class JdbcUserDao implements UserDao {
         user.setPassword(rs.getString("password_hash"));
         user.setActivated(true);
         user.setAuthorities("USER");
+        user.setBalance(rs.getBigDecimal("balance"));
         return user;
     }
 }

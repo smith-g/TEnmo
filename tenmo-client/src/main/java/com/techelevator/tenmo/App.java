@@ -5,10 +5,12 @@ import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.AuthenticationServiceException;
 import com.techelevator.view.ConsoleService;
+import org.springframework.http.HttpEntity;
+import org.springframework.web.client.RestTemplate;
 
 public class App {
 
-private static final String API_BASE_URL = "http://localhost:8080/";
+private static final String API_BASE_URL = "http://localhost:8090/";
     
     private static final String MENU_OPTION_EXIT = "Exit";
     private static final String LOGIN_MENU_OPTION_REGISTER = "Register";
@@ -25,6 +27,9 @@ private static final String API_BASE_URL = "http://localhost:8080/";
     private AuthenticatedUser currentUser;
     private ConsoleService console;
     private AuthenticationService authenticationService;
+	private RestTemplate restTemplate = new RestTemplate();
+
+
 
     public static void main(String[] args) {
     	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL));
@@ -68,7 +73,8 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	}
 
 	private void viewCurrentBalance() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stud
+
 		
 	}
 
