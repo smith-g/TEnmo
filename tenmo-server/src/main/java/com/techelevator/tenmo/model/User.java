@@ -21,16 +21,8 @@ public class User {
       this.username = username;
       this.password = password;
       this.activated = true;
-      this.balance = balance;
    }
 
-   public BigDecimal getBalance() {
-      return balance;
-   }
-
-   public void setBalance(BigDecimal balance) {
-      this.balance = balance;
-   }
 
    public Long getId() {
       return id;
@@ -105,4 +97,5 @@ public class User {
               ", authorities=" + authorities +
               '}';
    }
+
 }

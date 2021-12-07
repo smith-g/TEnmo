@@ -26,7 +26,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 	
     private AuthenticatedUser currentUser;
     private ConsoleService console;
-    private AuthenticationService authenticationService;
+	private AuthenticationService authenticationService;
 	private RestTemplate restTemplate = new RestTemplate();
 
 
