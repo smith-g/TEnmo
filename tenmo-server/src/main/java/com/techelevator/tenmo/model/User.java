@@ -23,6 +23,13 @@ public class User {
       this.activated = true;
    }
 
+   public BigDecimal getBalance() {
+      return balance;
+   }
+
+   public void setBalance(BigDecimal balance) {
+      this.balance = balance;
+   }
 
    public Long getId() {
       return id;

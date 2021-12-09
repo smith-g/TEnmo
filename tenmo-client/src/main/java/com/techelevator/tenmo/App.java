@@ -1,6 +1,7 @@
 package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.AuthenticationServiceException;
@@ -74,7 +75,12 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stud
+		for(User user: authenticationService.getAllUser()){
+			if(currentUser.getUser().getUsername().equals(user.getUsername())){
+				System.out.println("Your current balance is: $" + currentUser.getUser().getBalance());
 
+			}
+		}
 		
 	}
 

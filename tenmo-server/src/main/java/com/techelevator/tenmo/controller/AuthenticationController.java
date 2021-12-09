@@ -18,6 +18,8 @@ import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.security.jwt.TokenProvider;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 /**
  * Controller to authenticate users.
  */
@@ -58,9 +60,9 @@ public class AuthenticationController {
         }
     }
 
-    @RequestMapping(path = "/balance", method = RequestMethod.GET)
-    public Accounts getBalance(@PathVariable int id){
-        return accountDao.getBalance(id);
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<User> users(){
+        return userDao.findAll();
     }
 
 
