@@ -90,7 +90,7 @@ public class AuthenticationService {
 		return message;
 	}
 
-	public User []getAllUsers(){
+	public User[] getAllUser(){
 		try{
 			ResponseEntity<User[]> response = restTemplate.exchange(baseUrl, HttpMethod.GET, makeAuthEntity(),
 					User[].class);

@@ -29,7 +29,6 @@ public class AuthenticationController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private UserDao userDao;
-    private AccountDao accountDao;
 
     public AuthenticationController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder, UserDao userDao) {
         this.tokenProvider = tokenProvider;
@@ -60,10 +59,12 @@ public class AuthenticationController {
         }
     }
 
-    @RequestMapping(path = "/users", method = RequestMethod.GET)
+
+    @RequestMapping(path = "", method = RequestMethod.GET)
     public List<User> users(){
         return userDao.findAll();
     }
+
 
 
     /**

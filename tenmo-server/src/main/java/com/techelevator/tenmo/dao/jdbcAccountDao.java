@@ -33,4 +33,9 @@ public class jdbcAccountDao implements AccountDao {
         }
         return null;
     }
+
+    @Override
+    public Accounts updateBalance(int amount) {
+        return null;
+    }
 }
