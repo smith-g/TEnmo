@@ -60,7 +60,7 @@ public class AuthenticationController {
         }
     }
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @RequestMapping(path = "/users", method = RequestMethod.GET)
     public List<User> users(){
         return userDao.findAll();
     }
