@@ -9,6 +9,8 @@ import com.techelevator.view.ConsoleService;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+
 public class App {
 
 private static final String API_BASE_URL = "http://localhost:8090/";
@@ -75,7 +77,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stud
-		for(User user: authenticationService.getAllUser()){
+		for(User user: authenticationService.getAllUsers()){
 			if(currentUser.getUser().getUsername().equals(user.getUsername())){
 				System.out.println("Your current balance is: $" + currentUser.getUser().getBalance());
 
@@ -96,6 +98,13 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
+		System.out.println("----------------");
+		System.out.println("USERS");
+		System.out.println("ID          Name");
+		System.out.println("----------------");
+		for(User user : authenticationService.getAllUsers()){
+			System.out.println(user.getId() + "          " + user.getUsername());
+		}
 		
 	}
 
