@@ -5,6 +5,7 @@ import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.AuthenticationServiceException;
+import com.techelevator.tenmo.services.UserService;
 import com.techelevator.view.ConsoleService;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.client.RestTemplate;
@@ -31,17 +32,19 @@ private static final String API_BASE_URL = "http://localhost:8090/";
     private ConsoleService console;
 	private AuthenticationService authenticationService;
 	private RestTemplate restTemplate = new RestTemplate();
+	private UserService userService;
 
 
 
     public static void main(String[] args) {
-    	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL));
+    	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL), new UserService(API_BASE_URL));
     	app.run();
     }
 
-    public App(ConsoleService console, AuthenticationService authenticationService) {
+    public App(ConsoleService console, AuthenticationService authenticationService, UserService userService) {
 		this.console = console;
 		this.authenticationService = authenticationService;
+		this.userService = userService;
 	}
 
 	public void run() {
@@ -77,7 +80,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stud
-		for(User user: authenticationService.getAllUser()){
+		for(User user: userService.getAllUser()){
 			if(currentUser.getUser().getUsername().equals(user.getUsername())){
 				System.out.println("Your current balance is: $" + currentUser.getUser().getBalance());
 
@@ -102,7 +105,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 			System.out.println("USERS");
 			System.out.println("ID          Name");
 			System.out.println("--------------------");
-			for (User user : authenticationService.getAllUser()) {
+			for (User user : userService.getAllUser()) {
 				System.out.println(user.getId() + "          " + user.getUsername());
 			}
 			System.out.println("--------------------");

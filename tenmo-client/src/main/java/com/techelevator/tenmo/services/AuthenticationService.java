@@ -90,22 +90,7 @@ public class AuthenticationService {
 		return message;
 	}
 
-	public User[] getAllUser(){
-		try{
-			ResponseEntity<User[]> response = restTemplate.exchange(baseUrl, HttpMethod.GET, makeAuthEntity(),
-					User[].class);
-			return response.getBody();
-		}catch (RestClientResponseException | ResourceAccessException ex){
-			System.err.println("not found");
-		}
-		return null;
-	}
 
-	private HttpEntity<Void> makeAuthEntity() {
-		HttpHeaders headers = new HttpHeaders();
-		headers.setBearerAuth(authToken);
-        return new HttpEntity<>(headers);
-	}
 
 
 }
