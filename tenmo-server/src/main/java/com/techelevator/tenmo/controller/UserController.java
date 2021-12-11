@@ -24,8 +24,8 @@ public class UserController {
     }
 
 
-    @RequestMapping(path = "/{user}", method = RequestMethod.GET)
-    public User currentsUser(@RequestBody String username){
+    @RequestMapping(path = "/{username}", method = RequestMethod.GET)
+    public User currentsUser(@PathVariable String username){
         return userDao.findByUsername(username);
     }
 
