@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@PreAuthorize("isAuthenticated()")
 @RestController
+
 public class UserController {
 
-
     private UserDao userDao;
+
+    public UserController(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<User> users(){
@@ -21,10 +24,11 @@ public class UserController {
     }
 
 
-    @RequestMapping(path = "/user", method = RequestMethod.GET)
+    @RequestMapping(path = "/{user}", method = RequestMethod.GET)
     public User currentsUser(@RequestBody String username){
         return userDao.findByUsername(username);
     }
+
 
 
 }
