@@ -47,7 +47,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 		this.console = console;
 		this.authenticationService = authenticationService;
 		this.userService = userService;
-		this.accountService = this.accountService;
+		this.accountService = accountService;
 		this.transferService = transferService;
 	}
 
@@ -99,7 +99,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 			String choice = (String) console.getChoiceFromOptions(TRANSFER_OPTIONS);
 			if(TRANSFER_OPTIONS_ALL.equals(choice)){
 				for(Transfer transfer : transferService.getAllTransfers()){
-					System.out.println("transfer history: " + transfer.getTransferID());
+					System.out.println(transfer.getTransferID() + " from: " + transfer.getAccountFrom() +  "$" + transfer.getAmount());
 				}
 			}
 
@@ -127,7 +127,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 		Integer amount = console.getUserInputInteger("How many TE bucks would you like to send?");
 		for (Accounts account : accountService.getAllAccounts()) {
 			if (account.getUser_id() == receivingID) {
-				accountService.updateBalance(account, amount);
+				accountService.updateBalance(account);
 			}
 		}
 

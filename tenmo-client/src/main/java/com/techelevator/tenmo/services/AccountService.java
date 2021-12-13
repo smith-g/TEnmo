@@ -32,7 +32,7 @@ public class AccountService {
         return null;
     }
 
-    public boolean updateBalance(Accounts updatedAccount, Integer amount) {
+    public boolean updateBalance(Accounts updatedAccount) {
         HttpEntity<Accounts> entity = makeAccountEntity(updatedAccount);
 
         boolean success = false;
