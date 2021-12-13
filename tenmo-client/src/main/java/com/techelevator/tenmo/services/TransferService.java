@@ -30,9 +30,20 @@ public class TransferService {
         return new HttpEntity<>(headers);
     }
 
+    public Transfer getTransfer(long id) {
+        try {
+            ResponseEntity<Transfer> response = restTemplate.exchange(baseUrl + "transfer/" + id, HttpMethod.GET, makeAuthEntity(),
+                    Transfer.class);
+            return response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException ex){
+            System.err.println("nothing was found");
+        }
+        return null;
+    }
+
     public Transfer[] getAllTransfers(){
         try {
-            ResponseEntity<Transfer[]> response = restTemplate.exchange(baseUrl + "/transferhistory", HttpMethod.GET, makeAuthEntity(),
+            ResponseEntity<Transfer[]> response = restTemplate.exchange(baseUrl + "transferhistory", HttpMethod.GET, makeAuthEntity(),
                     Transfer[].class);
             return response.getBody();
         }catch (RestClientResponseException | ResourceAccessException ex){

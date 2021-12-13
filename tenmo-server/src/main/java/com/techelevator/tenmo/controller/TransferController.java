@@ -20,8 +20,8 @@ public class TransferController {
         return transferDao.viewTransfers();
     }
 
-    @RequestMapping(path = "/transferbyid", method = RequestMethod.GET)
-    public Transfers transfersById(@PathVariable int id) throws Exception {
+    @RequestMapping(path = "/transfer/{id}", method = RequestMethod.GET)
+    public Transfers transfersById(@PathVariable long id) {
         return transferDao.findTransfer(id);
     }
 

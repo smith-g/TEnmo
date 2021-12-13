@@ -14,7 +14,7 @@ public interface TransferDao{
 
      Transfers pendingTransactions();
 
-     Transfers findTransfer(long id) throws Exception;
+     Transfers findTransfer(long id);
 
      Transfers createTransfer(Transfers transfers);
 

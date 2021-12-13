@@ -95,10 +95,15 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
 		while (true){
+			for (Accounts account : accountService.getAllAccounts()) {
+				if (currentUser.getUser().getId() == account.getUser_id()) {
+					currentAccount = account;
+				}
+			}
 			String choice = (String) console.getChoiceFromOptions(TRANSFER_OPTIONS);
 			if(TRANSFER_OPTIONS_ALL.equals(choice)){
 				for(Transfer transfer : transferService.getAllTransfers()){
-					if(currentAccount.getAccount_id() == transfer.getAccountFrom()) {
+					if(currentAccount.getAccount_id() == transfer.getAccountFrom() || currentAccount.getAccount_id() == transfer.getAccountTo()) {
 						System.out.println("-------------------------------------------");
 						System.out.println("Transfer id      from/to        amount");
 						System.out.println("-------------------------------------------");
