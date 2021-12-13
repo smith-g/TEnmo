@@ -26,7 +26,7 @@ public class TransferController {
     }
 
     @RequestMapping(path = "/createtransfer", method = RequestMethod.POST)
-    public void createTransfers(@RequestBody Transfers transfers){
-         transferDao.createTransfer(transfers);
+    public Transfers createTransfers(@RequestBody Transfers transfers){
+         return transferDao.createTransfer(transfers);
     }
 }

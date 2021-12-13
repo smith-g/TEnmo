@@ -46,7 +46,7 @@ public class JdbcTransferDao implements TransferDao{
     }
 
     @Override
-    public Transfers findTransfer(int id) {
+    public Transfers findTransfer(long id) {
 
         String sql = "Select * from transfers where transfer_id = ?";
 
@@ -59,15 +59,13 @@ public class JdbcTransferDao implements TransferDao{
 
     @Override
     public Transfers createTransfer(Transfers transfers) {
-            String sql = "insert into transfers(TRANSFER_TYPE_ID," +
-                    " TRANSFER_STATUS_ID," +
-                    " ACCOUNT_FROM, " +
-                    "ACCOUNT_TO," +
-                    " AMOUNT) " +
-                    "values(?,?,?,?,?)";
-            jdbcTemplate.update(sql, transfers.getTransferType(), transfers.getTransferStatus(),
+            String sql = "insert into transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
+                    "values (?,?,?,?,?) returning transfer_id;";
+            Long transferId = jdbcTemplate.queryForObject(sql, Long.class,
+                    transfers.getTransferType(), transfers.getTransferStatus(),
                     transfers.getAccountFrom(), transfers.getAccountTo(), transfers.getAmount());
-            return transfers;
+
+            return findTransfer(transferId);
     }
 
 
