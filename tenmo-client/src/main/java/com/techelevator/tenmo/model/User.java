@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 
 public class User {
 
-	private Integer id;
+	private long id;
 	private String username;
 	private BigDecimal balance;
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 	

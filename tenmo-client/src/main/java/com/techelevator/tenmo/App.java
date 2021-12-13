@@ -1,8 +1,10 @@
 package com.techelevator.tenmo;
 
+import com.techelevator.tenmo.model.Accounts;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
+import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.AuthenticationServiceException;
 import com.techelevator.tenmo.services.UserService;
@@ -14,7 +16,7 @@ import java.util.Arrays;
 
 public class App {
 
-private static final String API_BASE_URL = "http://localhost:8090/";
+private static final String API_BASE_URL = "http://localhost:8080/";
     
     private static final String MENU_OPTION_EXIT = "Exit";
     private static final String LOGIN_MENU_OPTION_REGISTER = "Register";
@@ -33,18 +35,20 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 	private AuthenticationService authenticationService;
 	private RestTemplate restTemplate = new RestTemplate();
 	private UserService userService;
+	private AccountService accountService;
 
 
 
     public static void main(String[] args) {
-    	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL), new UserService(API_BASE_URL));
+    	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL), new UserService(API_BASE_URL), new AccountService(API_BASE_URL));
     	app.run();
     }
 
-    public App(ConsoleService console, AuthenticationService authenticationService, UserService userService) {
+    public App(ConsoleService console, AuthenticationService authenticationService, UserService userService, AccountService accountService) {
 		this.console = console;
 		this.authenticationService = authenticationService;
 		this.userService = userService;
+		this.accountService = accountService;
 	}
 
 	public void run() {
@@ -109,7 +113,17 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 				System.out.println(user.getId() + "          " + user.getUsername());
 			}
 			System.out.println("--------------------");
-			console.getUserInputInteger("Enter user id");
+			long sendingID = currentUser.getUser().getId();
+			long receivingID = console.getUserInputInteger("Enter user id");
+			long amount = console.getUserInputInteger("How many TE bucks would you like to send?");
+			for (Accounts account : accountService.getAllAccounts()) {
+				if (account.getUser_id() == receivingID) {
+					accountService.updateBalance(account);
+				}
+			}
+
+
+
 
 		
 	}

@@ -1,15 +1,15 @@
 package com.techelevator.tenmo.dao;
 
 
+import com.techelevator.tenmo.model.Accounts;
 import com.techelevator.tenmo.model.Transfers;
+
+import java.util.List;
 
 public interface TransferDao{
 
-    public Transfers transferAmount();
-
-    public Transfers[] viewTransfers();
+    public List<Transfers> viewTransfers();
 
     public Transfers pendingTransactions();
-
 
 }

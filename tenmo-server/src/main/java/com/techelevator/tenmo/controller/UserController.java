@@ -9,7 +9,6 @@ import java.util.List;
 
 
 @RestController
-
 public class UserController {
 
     private UserDao userDao;

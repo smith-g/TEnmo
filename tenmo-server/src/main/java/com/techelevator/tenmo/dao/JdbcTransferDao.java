@@ -1,7 +1,12 @@
 package com.techelevator.tenmo.dao;
 
+import com.techelevator.tenmo.model.Accounts;
 import com.techelevator.tenmo.model.Transfers;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JdbcTransferDao implements TransferDao{
 
@@ -11,15 +16,14 @@ public class JdbcTransferDao implements TransferDao{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-
     @Override
-    public Transfers transferAmount() {
-        return null;
-    }
+    public List<Transfers> viewTransfers() {
+        List<Transfers> transferHistory = new ArrayList<>();
 
-    @Override
-    public Transfers[] viewTransfers() {
-        return new Transfers[0];
+        String sql = "Select * from transfers";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+
+        return transferHistory;
     }
 
     @Override
