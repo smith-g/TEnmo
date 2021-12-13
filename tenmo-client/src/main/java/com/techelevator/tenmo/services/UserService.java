@@ -27,7 +27,7 @@ public class UserService {
 
     public User[] getAllUser(){
         try{
-            ResponseEntity<User[]> response = restTemplate.exchange(baseUrl, HttpMethod.GET, makeAuthEntity(),
+            ResponseEntity<User[]> response = restTemplate.exchange(baseUrl + "/users", HttpMethod.GET, makeAuthEntity(),
                     User[].class);
             return response.getBody();
         }catch (RestClientResponseException | ResourceAccessException ex){

@@ -127,7 +127,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 		Integer amount = console.getUserInputInteger("How many TE bucks would you like to send?");
 		for (Accounts account : accountService.getAllAccounts()) {
 			if (account.getUser_id() == receivingID) {
-				accountService.updateBalance(account);
+				accountService.updateBalance(account, amount);
 			}
 		}
 

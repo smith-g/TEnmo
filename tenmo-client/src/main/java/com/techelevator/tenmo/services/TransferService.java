@@ -32,7 +32,7 @@ public class TransferService {
 
     public Transfer[] getAllTransfers(){
         try {
-            ResponseEntity<Transfer[]> response = restTemplate.exchange(baseUrl, HttpMethod.GET, makeAuthEntity(),
+            ResponseEntity<Transfer[]> response = restTemplate.exchange(baseUrl + "/transferhistory", HttpMethod.GET, makeAuthEntity(),
                     Transfer[].class);
             return response.getBody();
         }catch (RestClientResponseException | ResourceAccessException ex){

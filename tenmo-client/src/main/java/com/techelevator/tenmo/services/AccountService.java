@@ -32,11 +32,13 @@ public class AccountService {
         return null;
     }
 
-    public boolean updateBalance(Accounts updatedAccount) {
+    public boolean updateBalance(Accounts updatedAccount, Integer amount) {
+        HttpEntity<Accounts> entity = makeAccountEntity(updatedAccount);
+
         boolean success = false;
         try {
             restTemplate.put(baseUrl + "pay/" + updatedAccount.getUser_id(),
-                    makeAccountEntity(updatedAccount));
+                    entity);
             success = true;
         } catch (RestClientResponseException | ResourceAccessException e) {
             System.err.println(e.getMessage());
