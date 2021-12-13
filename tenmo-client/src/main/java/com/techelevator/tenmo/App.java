@@ -85,13 +85,11 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stud
-		for(User user: userService.getAllUser()){
-			if(currentUser.getUser().getUsername().equals(user.getUsername())){
-				System.out.println("Your current balance is: $" + currentUser.getUser().getBalance());
-
+		for (Accounts account : accountService.getAllAccounts()) {
+			if (currentUser.getUser().getId() == account.getUser_id()) {
+				System.out.println("Your current balance is: $" + account.getBalance());
 			}
 		}
-		
 	}
 
 	private void viewTransferHistory() {
@@ -131,15 +129,36 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 		System.out.println("--------------------");
 		long sendingID = currentUser.getUser().getId();
 		long receivingID = console.getUserInputInteger("Enter user id");
+
+		if (sendingID == receivingID) {
+			System.out.println("You can not send TE bucks to yourself!");
+			mainMenu();
+		}
+
 		Integer amount = console.getUserInputInteger("How many TE bucks would you like to send?");
+
 		for (Accounts account : accountService.getAllAccounts()) {
-			if (account.getUser_id() == receivingID) {
-				account.setBalance(amount);
-				accountService.updateBalance(account);
+			if (account.getUser_id() == sendingID) {
+				Accounts sendingAccount = account;
+
+				if (sendingAccount.getBalance() < amount) {
+					System.out.println("\nInsufficient funds");
+					break;
+				}
+
+				sendingAccount.setBalance(amount * -1);
+				accountService.updateBalance(sendingAccount);
+			}
+			if ((account.getUser_id() == receivingID)) {
+				Accounts receivingAccount = account;
+				receivingAccount.setBalance(amount);
+				accountService.updateBalance(receivingAccount);
 			}
 		}
 
-		
+
+
+
 	}
 
 	private void requestBucks() {
