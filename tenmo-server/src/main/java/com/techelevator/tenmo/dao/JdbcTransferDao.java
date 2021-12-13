@@ -1,11 +1,13 @@
 package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Transfers;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +56,24 @@ public class JdbcTransferDao implements TransferDao{
         }
         throw new UsernameNotFoundException("Transfer " + id + " was not found.");
     }
+
+    @Override
+    public boolean createTransfer(long type, long status, long accountFrom, long accountTo, BigDecimal amount) {
+        try {
+            String sql = "insert into transfers(TRANSFER_TYPE_ID," +
+                    " TRANSFER_STATUS_ID," +
+                    " ACCOUNT_FROM, " +
+                    "ACCOUNT_TO," +
+                    " AMOUNT) " +
+                    "values(?,?,?,?,?)";
+            jdbcTemplate.update(sql, type, status, accountFrom, accountTo, amount);
+        }catch (DataAccessException ex){
+            return false;
+        }
+        return true;
+    }
+
+
 
     private Transfers mapRowTOTransfers(SqlRowSet rs){
         Transfers transfers = new Transfers();

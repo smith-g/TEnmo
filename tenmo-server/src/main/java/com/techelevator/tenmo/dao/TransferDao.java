@@ -3,17 +3,19 @@ package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Transfers;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface TransferDao{
 
-    public Transfers transferAmount();
+     Transfers transferAmount();
 
-    public List<Transfers> viewTransfers();
+     List<Transfers> viewTransfers();
 
-    public Transfers pendingTransactions();
+     Transfers pendingTransactions();
 
-    public Transfers findTransfer(int id) throws Exception;
+     Transfers findTransfer(int id) throws Exception;
 
+     boolean createTransfer(long type, long status, long accountFrom, long accountTo, BigDecimal amount);
 
 }

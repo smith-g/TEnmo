@@ -24,11 +24,12 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_VIEW_BALANCE, MAIN_MENU_OPTION_SEND_BUCKS, MAIN_MENU_OPTION_VIEW_PAST_TRANSFERS, MAIN_MENU_OPTION_REQUEST_BUCKS, MAIN_MENU_OPTION_VIEW_PENDING_REQUESTS, MAIN_MENU_OPTION_LOGIN, MENU_OPTION_EXIT };
 	private static final String TRANSFER_OPTIONS_SPECIFIC = "Look up specific transfer";
 	private static final String TRANSFER_OPTIONS_ALL = "See all transfer history";
-	private static final String[] TRANSFER_OPTIONS = {TRANSFER_OPTIONS_ALL, TRANSFER_OPTIONS_SPECIFIC};
+	private static final String[] TRANSFER_OPTIONS = {TRANSFER_OPTIONS_ALL, TRANSFER_OPTIONS_SPECIFIC, MENU_OPTION_EXIT};
 
 
 
     private AuthenticatedUser currentUser;
+	private Accounts currentAccount;
     private ConsoleService console;
 	private AuthenticationService authenticationService;
 	private RestTemplate restTemplate = new RestTemplate();
@@ -99,9 +100,15 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 			String choice = (String) console.getChoiceFromOptions(TRANSFER_OPTIONS);
 			if(TRANSFER_OPTIONS_ALL.equals(choice)){
 				for(Transfer transfer : transferService.getAllTransfers()){
-					System.out.println(transfer.getTransferID() + " from: " + transfer.getAccountFrom() +  "$" + transfer.getAmount());
+					if(currentAccount.getAccount_id() == transfer.getAccountFrom()) {
+						System.out.println("-------------------------------------------");
+						System.out.println("Transfer id      from/to        amount");
+						System.out.println("-------------------------------------------");
+						System.out.println(transfer.getTransferID() + "         from:" + transfer.getAccountFrom() + "         $" + transfer.getAmount());
+						System.out.println(transfer.getTransferID() + "           to:" + transfer.getAccountTo() + "           $" + transfer.getAmount());
+					}
 				}
-			}
+			}else exitProgram();
 
 		}
 		
@@ -127,7 +134,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 		Integer amount = console.getUserInputInteger("How many TE bucks would you like to send?");
 		for (Accounts account : accountService.getAllAccounts()) {
 			if (account.getUser_id() == receivingID) {
-				account.setBalance(account.getBalance() + amount);
+				account.setBalance(amount);
 				accountService.updateBalance(account);
 			}
 		}
