@@ -4,21 +4,45 @@ import java.math.BigDecimal;
 
 public class Transfer {
 
-    public static String TRANSFER_APPROVE = "1";
-    public static String TRANSFER_PENDING = "2";
-    public static String TRANSFER_NOT_APPROVED = "3";
-    public static String[] TRANSFER_APPROVAL = {TRANSFER_APPROVE, TRANSFER_PENDING, TRANSFER_NOT_APPROVED};
+    public static long TRANSFER_APPROVE = 2;
+    public static long TRANSFER_PENDING = 1;
+    public static long TRANSFER_NOT_APPROVED = 3;
 
-
-    public static String TRANSFER_SENDS = "1";
-    public static String TRANSFER_RECEIVES = "2";
-    public static String[] TRANSFERS_TYPE = {TRANSFER_SENDS, TRANSFER_RECEIVES};
-
+    public static long TRANSFER_SENDS = 2;
+    public static long TRANSFER_RECEIVES = 1;
 
     private long transferID;
+    private long transferType;
+    private long transferStatus;
     private long accountFrom;
     private long accountTo;
     private BigDecimal amount;
+
+    public long getTransferType() {
+        return transferType;
+    }
+
+    public void setTransferType(long transferType) {
+        if (TRANSFER_SENDS == transferType) {
+            this.transferType = TRANSFER_SENDS;
+        } else if (TRANSFER_RECEIVES == transferType) {
+            this.transferType = TRANSFER_RECEIVES;
+        }
+    }
+
+    public long getTransferStatus() {
+        return transferStatus;
+    }
+
+    public void setTransferStatus(long transferStatus) {
+        if (TRANSFER_APPROVE == transferStatus) {
+            this.transferStatus = TRANSFER_APPROVE;
+        } else if (TRANSFER_PENDING == transferStatus) {
+            this.transferStatus = TRANSFER_PENDING;
+            ;
+        } else
+            this.transferStatus = TRANSFER_NOT_APPROVED;
+    }
 
     public long getTransferID() {
         return transferID;

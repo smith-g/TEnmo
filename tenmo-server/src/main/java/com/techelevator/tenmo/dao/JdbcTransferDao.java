@@ -1,13 +1,15 @@
 package com.techelevator.tenmo.dao;
 
-import com.techelevator.tenmo.exceptions.TransferException;
 import com.techelevator.tenmo.model.Transfers;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcTransferDao implements TransferDao{
 
     private JdbcTemplate jdbcTemplate;
@@ -42,7 +44,7 @@ public class JdbcTransferDao implements TransferDao{
     }
 
     @Override
-    public Transfers findTransfer(int id) throws Exception {
+    public Transfers findTransfer(int id) {
 
         String sql = "Select * from transfers where transfer_id = ?";
 
@@ -50,13 +52,14 @@ public class JdbcTransferDao implements TransferDao{
         if(rowSet.next()){
             return mapRowTOTransfers(rowSet);
         }
-        Exception TransferException = new Exception();
-        throw TransferException;
+        throw new UsernameNotFoundException("Transfer " + id + " was not found.");
     }
 
     private Transfers mapRowTOTransfers(SqlRowSet rs){
         Transfers transfers = new Transfers();
         transfers.setTransferID(rs.getLong("transfer_id"));
+        transfers.setTransferType(rs.getLong("transfer_type_id"));
+        transfers.setTransferStatus(rs.getLong("transfer_status_id"));
         transfers.setAccountFrom(rs.getLong("account_from"));
         transfers.setAccountTo(rs.getLong("account_to"));
         transfers.setAmount(rs.getBigDecimal("amount"));

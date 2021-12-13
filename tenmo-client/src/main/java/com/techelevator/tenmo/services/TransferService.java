@@ -30,10 +30,11 @@ public class TransferService {
         return new HttpEntity<>(headers);
     }
 
-    public TransferService[] getAllTransfers(){
+    public Transfer[] getAllTransfers(){
         try {
             ResponseEntity<Transfer[]> response = restTemplate.exchange(baseUrl, HttpMethod.GET, makeAuthEntity(),
                     Transfer[].class);
+            return response.getBody();
         }catch (RestClientResponseException | ResourceAccessException ex){
             System.err.println("nothing was found");
         }

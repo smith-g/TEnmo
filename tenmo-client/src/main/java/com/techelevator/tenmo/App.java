@@ -11,6 +11,8 @@ import com.techelevator.tenmo.services.UserService;
 import com.techelevator.view.ConsoleService;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+
 public class App {
 
 private static final String API_BASE_URL = "http://localhost:8090/";
@@ -50,6 +52,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 		this.console = console;
 		this.authenticationService = authenticationService;
 		this.userService = userService;
+		this.transferService = transferService;
 	}
 
 	public void run() {
@@ -99,8 +102,8 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 		while (true){
 			String choice = (String) console.getChoiceFromOptions(TRANSFER_OPTIONS);
 			if(TRANSFER_OPTIONS_ALL.equals(choice)){
-				for(TransferService transfer : transferService.getAllTransfers()){
-					System.out.println("transfer history: " + transfer.getAllTransfers());
+				for(Transfer transfer : transferService.getAllTransfers()){
+					System.out.println("transfer history: " + transfer.getTransferID());
 				}
 			}
 
