@@ -11,7 +11,7 @@ public class Accounts{
 
     public Accounts(long account_id, long user_id, BigDecimal balance) {
         this.account_id = account_id;
-        this.user_id = account_id;
+        this.user_id = user_id;
         this.balance = balance;
     }
 

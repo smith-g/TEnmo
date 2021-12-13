@@ -1,13 +1,7 @@
 package com.techelevator.tenmo;
 
-import com.techelevator.tenmo.model.AuthenticatedUser;
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.User;
-import com.techelevator.tenmo.model.UserCredentials;
-import com.techelevator.tenmo.services.AuthenticationService;
-import com.techelevator.tenmo.services.AuthenticationServiceException;
-import com.techelevator.tenmo.services.TransferService;
-import com.techelevator.tenmo.services.UserService;
+import com.techelevator.tenmo.model.*;
+import com.techelevator.tenmo.services.*;
 import com.techelevator.view.ConsoleService;
 import org.springframework.web.client.RestTemplate;
 
@@ -39,19 +33,21 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 	private AuthenticationService authenticationService;
 	private RestTemplate restTemplate = new RestTemplate();
 	private UserService userService;
+	private AccountService accountService;
 	public TransferService transferService;
 
 
 
     public static void main(String[] args) {
-    	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL), new UserService(API_BASE_URL), new TransferService(API_BASE_URL));
+    	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL), new UserService(API_BASE_URL), new AccountService(API_BASE_URL), new TransferService(API_BASE_URL));
     	app.run();
     }
 
-    public App(ConsoleService console, AuthenticationService authenticationService, UserService userService, TransferService transferService) {
+    public App(ConsoleService console, AuthenticationService authenticationService, UserService userService, AccountService accountService, TransferService transferService) {
 		this.console = console;
 		this.authenticationService = authenticationService;
 		this.userService = userService;
+		this.accountService = this.accountService;
 		this.transferService = transferService;
 	}
 
@@ -126,7 +122,14 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 				System.out.println(user.getId() + "          " + user.getUsername());
 			}
 			System.out.println("--------------------");
-			console.getUserInputInteger("Enter user id");
+		long sendingID = currentUser.getUser().getId();
+		long receivingID = console.getUserInputInteger("Enter user id");
+		Integer amount = console.getUserInputInteger("How many TE bucks would you like to send?");
+		for (Accounts account : accountService.getAllAccounts()) {
+			if (account.getUser_id() == receivingID) {
+				accountService.updateBalance(account);
+			}
+		}
 
 		
 	}

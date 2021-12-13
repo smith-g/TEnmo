@@ -2,8 +2,14 @@ package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Accounts;
 
-public interface AccountDao {
-    Accounts getBalance(int id);
+import java.math.BigDecimal;
+import java.util.List;
 
-    Accounts updateBalance(int amount);
+public interface AccountDao {
+
+    List<Accounts> findAll();
+
+    Accounts getAccount(long id);
+
+    boolean updateBalance(BigDecimal amount, long id);
 }
