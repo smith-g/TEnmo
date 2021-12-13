@@ -34,7 +34,6 @@ public class AccountService {
 
     public boolean updateBalance(Accounts updatedAccount) {
         HttpEntity<Accounts> entity = makeAccountEntity(updatedAccount);
-
         boolean success = false;
         try {
             restTemplate.put(baseUrl + "pay/" + updatedAccount.getUser_id(),

@@ -114,19 +114,20 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-			System.out.println("-------------------");
-			System.out.println("USERS");
-			System.out.println("ID          Name");
-			System.out.println("--------------------");
-			for (User user : userService.getAllUser()) {
-				System.out.println(user.getId() + "          " + user.getUsername());
-			}
-			System.out.println("--------------------");
+		System.out.println("-------------------");
+		System.out.println("USERS");
+		System.out.println("ID          Name");
+		System.out.println("--------------------");
+		for (User user : userService.getAllUser()) {
+			System.out.println(user.getId() + "          " + user.getUsername());
+		}
+		System.out.println("--------------------");
 		long sendingID = currentUser.getUser().getId();
 		long receivingID = console.getUserInputInteger("Enter user id");
 		Integer amount = console.getUserInputInteger("How many TE bucks would you like to send?");
 		for (Accounts account : accountService.getAllAccounts()) {
 			if (account.getUser_id() == receivingID) {
+				account.setBalance(account.getBalance() + amount);
 				accountService.updateBalance(account);
 			}
 		}

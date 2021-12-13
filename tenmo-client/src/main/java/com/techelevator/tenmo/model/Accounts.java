@@ -6,13 +6,13 @@ public class Accounts {
 
     private long account_id;
     private long user_id;
-    private BigDecimal balance;
+    private Integer balance;
 
-    public BigDecimal getBalance() {
+    public Integer getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(Integer balance) {
         this.balance = balance;
     }
 
