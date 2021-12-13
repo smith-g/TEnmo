@@ -16,6 +16,6 @@ public interface TransferDao{
 
      Transfers findTransfer(int id) throws Exception;
 
-     boolean createTransfer(long type, long status, long accountFrom, long accountTo, BigDecimal amount);
+     Transfers createTransfer(Transfers transfers);
 
 }

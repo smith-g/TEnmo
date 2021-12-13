@@ -58,19 +58,16 @@ public class JdbcTransferDao implements TransferDao{
     }
 
     @Override
-    public boolean createTransfer(long type, long status, long accountFrom, long accountTo, BigDecimal amount) {
-        try {
+    public Transfers createTransfer(Transfers transfers) {
             String sql = "insert into transfers(TRANSFER_TYPE_ID," +
                     " TRANSFER_STATUS_ID," +
                     " ACCOUNT_FROM, " +
                     "ACCOUNT_TO," +
                     " AMOUNT) " +
                     "values(?,?,?,?,?)";
-            jdbcTemplate.update(sql, type, status, accountFrom, accountTo, amount);
-        }catch (DataAccessException ex){
-            return false;
-        }
-        return true;
+            jdbcTemplate.update(sql, transfers.getTransferType(), transfers.getTransferStatus(),
+                    transfers.getAccountFrom(), transfers.getAccountTo(), transfers.getAmount());
+            return transfers;
     }
 
 

@@ -1,9 +1,7 @@
 package com.techelevator.tenmo.controller;
 
-import com.techelevator.tenmo.dao.JdbcTransferDao;
 import com.techelevator.tenmo.dao.TransferDao;
 import com.techelevator.tenmo.model.Transfers;
-import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +27,6 @@ public class TransferController {
 
     @RequestMapping(path = "/createtransfer", method = RequestMethod.POST)
     public void createTransfers(@RequestBody Transfers transfers){
-         transferDao.createTransfer(transfers.getTransferType(), transfers.getTransferStatus(),
-                 transfers.getAccountFrom(), transfers.getAccountTo(), transfers.getAmount());
+         transferDao.createTransfer(transfers);
     }
 }
