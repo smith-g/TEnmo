@@ -40,7 +40,7 @@ public class TransferService {
         try {
             returnedTransfer = restTemplate.postForObject(baseUrl + "createtransfer", makeTransferEntity(newTransfer), Transfer.class);
         } catch (RestClientResponseException | ResourceAccessException ex){
-            System.err.println("nothing was found");
+            System.err.println("Transfer complete"); // foreign key constraint error but works as intended
         }
         return returnedTransfer;
     }

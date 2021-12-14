@@ -111,14 +111,17 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 			String choice = (String) console.getChoiceFromOptions(TRANSFER_OPTIONS);
 			if(TRANSFER_OPTIONS_ALL.equals(choice)){
 
+				transferService.setAuthToken(currentUser.getToken());
+
 				System.out.println("-------------------------------------------");
 				System.out.println("Transfer id      from/to        amount");
 				System.out.println("-------------------------------------------");
 
 				for(Transfer transfer : transferService.getAllTransfers()){
-					if(currentAccount.getAccount_id() == transfer.getAccountFrom() || currentAccount.getAccount_id() == transfer.getAccountTo()) {
-						System.out.println(transfer.getTransferID() + "         from:" + users.get(accounts.get(transfer.getAccountFrom())) + "         $" + transfer.getAmount());
+					if (currentAccount.getAccount_id() == transfer.getAccountFrom()) {
 						System.out.println(transfer.getTransferID() + "           to:" + users.get(accounts.get(transfer.getAccountTo())) + "         $" + transfer.getAmount());
+					} else if (currentAccount.getAccount_id() == transfer.getAccountTo()) {
+						System.out.println(transfer.getTransferID() + "         from:" + users.get(accounts.get(transfer.getAccountFrom())) + "         $" + transfer.getAmount());
 					}
 				}
 
@@ -128,6 +131,9 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 				}
 
 			}else if(TRANSFER_OPTIONS_SPECIFIC.equals(choice)){
+
+				transferService.setAuthToken(currentUser.getToken());
+
 				long transferId =  console.getUserInputInteger("Enter transfer id: ");
 				Transfer transfer = transferService.getTransfer(transferId);
 				if(users.containsKey(accounts.get(transfer.getAccountFrom())) && users.containsKey(accounts.get(transfer.getAccountTo()))){
