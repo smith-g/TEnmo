@@ -113,19 +113,24 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 			}
 			String choice = (String) console.getChoiceFromOptions(TRANSFER_OPTIONS);
 			if(TRANSFER_OPTIONS_ALL.equals(choice)){
+
+				System.out.println("-------------------------------------------");
+				System.out.println("Transfer id      from/to        amount");
+				System.out.println("-------------------------------------------");
+
 				for(Transfer transfer : transferService.getAllTransfers()){
 					if(currentAccount.getAccount_id() == transfer.getAccountFrom() || currentAccount.getAccount_id() == transfer.getAccountTo()) {
-						System.out.println("-------------------------------------------");
-						System.out.println("Transfer id      from/to        amount");
-						System.out.println("-------------------------------------------");
-						System.out.println(transfer.getTransferID() + "         from:" + transfer.getAccountFrom() + "         $" + transfer.getAmount());
-						System.out.println(transfer.getTransferID() + "           to:" + transfer.getAccountTo() + "           $" + transfer.getAmount());
-						String exit = console.getUserInput("do you want to exit? press y: ");
-						if(exit.equalsIgnoreCase("y")) {
-							break;
-						}
+						System.out.println(transfer.getTransferID() + "         from:" + users.get(accounts.get(transfer.getAccountFrom())) + "         $" + transfer.getAmount());
+						System.out.println("\n");
+						System.out.println(transfer.getTransferID() + "           to:" + users.get(accounts.get(transfer.getAccountTo())) + "           $" + transfer.getAmount());
 					}
 				}
+
+				String exit = console.getUserInput("do you want to exit? press y: ");
+				if(exit.equalsIgnoreCase("y")) {
+					break;
+				}
+
 			}else if(TRANSFER_OPTIONS_SPECIFIC.equals(choice)){
 				long transferId =  console.getUserInputInteger("Enter transfer id: ");
 				Transfer transfer = transferService.getTransfer(transferId);
@@ -141,7 +146,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 					System.out.println();
 				    String exit = console.getUserInput("do you want to exit? press y: ");
 				    if(exit.equalsIgnoreCase("y")) {
-					break;
+					mainMenu();
 				    }
 				}
 			}
