@@ -2,6 +2,7 @@ package com.techelevator.tenmo.controller;
 
 import com.techelevator.tenmo.dao.AccountDao;
 import com.techelevator.tenmo.model.Accounts;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -16,6 +17,7 @@ public class AccountController {
         this.accountDao = accountDao;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(path = "/pay/{id}", method = RequestMethod.PUT)
     public void updateBalance(@RequestBody Accounts updatedAccount, @PathVariable long id) {
         accountDao.updateBalance(updatedAccount.getBalance(), id);

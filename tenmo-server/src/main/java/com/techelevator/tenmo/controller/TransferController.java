@@ -27,6 +27,12 @@ public class TransferController {
 
     @RequestMapping(path = "/createtransfer", method = RequestMethod.POST)
     public Transfers createTransfers(@RequestBody Transfers transfers){
-         return transferDao.createTransfer(transfers);
+//        long fromAcc = transfers.getAccountFrom();
+//        long toAcc = transfers.getAccountTo();
+//        Accounts fromAccount = accountDao.getAccount(fromAcc);
+//        fromAccount.setBalance(fromAccount.getBalance().subtract(transfers.getAmount()));
+//        accountDao.updateBalance(fromAccount.getBalance().subtract(transfers.getAmount()), fromAcc);
+
+        return transferDao.createTransfer(transfers);
     }
 }

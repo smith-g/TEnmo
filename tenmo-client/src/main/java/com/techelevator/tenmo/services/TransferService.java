@@ -1,10 +1,7 @@
 package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.Transfer;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
@@ -28,6 +25,24 @@ public class TransferService {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(authToken);
         return new HttpEntity<>(headers);
+    }
+
+    private HttpEntity<Transfer> makeTransferEntity(Transfer transfer) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(authToken);
+        return new HttpEntity<>(transfer, headers);
+    }
+
+    public Transfer create(Transfer newTransfer) {
+        Transfer returnedTransfer = null;
+
+        try {
+            returnedTransfer = restTemplate.postForObject(baseUrl + "createtransfer", makeTransferEntity(newTransfer), Transfer.class);
+        } catch (RestClientResponseException | ResourceAccessException ex){
+            System.err.println("nothing was found");
+        }
+        return returnedTransfer;
     }
 
     public Transfer getTransfer(long id) {

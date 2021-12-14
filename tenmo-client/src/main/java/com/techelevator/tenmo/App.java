@@ -5,6 +5,7 @@ import com.techelevator.tenmo.services.*;
 import com.techelevator.view.ConsoleService;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -164,6 +165,11 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 			System.out.println(user.getId() + "          " + user.getUsername());
 		}
 		System.out.println("--------------------");
+		Accounts receivingAccount;
+		Accounts sendingAccount;
+		Transfer transfer = new Transfer();
+		transfer.setTransferType(2);
+		transfer.setTransferStatus(2);
 		long sendingID = currentUser.getUser().getId();
 		long receivingID = console.getUserInputInteger("Enter user id");
 
@@ -171,12 +177,14 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 			System.out.println("You can not send TE bucks to yourself!");
 			mainMenu();
 		}
+		accountService.setAuthToken(currentUser.getToken());
 
 		Integer amount = console.getUserInputInteger("How many TE bucks would you like to send?");
+		transfer.setAmount(BigDecimal.valueOf(amount));
 
 		for (Accounts account : accountService.getAllAccounts()) {
 			if (account.getUser_id() == sendingID) {
-				Accounts sendingAccount = account;
+				sendingAccount = account;
 
 				if (sendingAccount.getBalance() < amount) {
 					System.out.println("\nInsufficient funds");
@@ -185,17 +193,16 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 				sendingAccount.setBalance(amount * -1);
 				accountService.updateBalance(sendingAccount);
+				transfer.setAccountFrom(sendingAccount.getAccount_id());
 			}
 			if ((account.getUser_id() == receivingID)) {
-				Accounts receivingAccount = account;
+				receivingAccount = account;
 				receivingAccount.setBalance(amount);
 				accountService.updateBalance(receivingAccount);
+				transfer.setAccountTo(receivingAccount.getAccount_id());
 			}
+			transferService.create(transfer);
 		}
-
-
-
-
 	}
 
 	private void requestBucks() {
