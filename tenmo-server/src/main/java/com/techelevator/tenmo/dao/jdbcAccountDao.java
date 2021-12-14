@@ -53,6 +53,17 @@ public class jdbcAccountDao implements AccountDao {
     }
 
     @Override
+    public Accounts getBalance(long id) {
+        String sql = "select balance from accounts" +
+                " where user_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+        if (results.next()) {
+            return mapRowToAccount(results);
+        }
+        throw new UsernameNotFoundException("Invalid user ID");
+    }
+
+    @Override
     public boolean updateBalance(BigDecimal amount, long id) {
         String sql = "update accounts set balance = balance + ? where user_id = ?;";
         return jdbcTemplate.update(sql, amount, id) == 1;

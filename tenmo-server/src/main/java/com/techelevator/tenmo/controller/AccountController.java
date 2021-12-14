@@ -28,6 +28,12 @@ public class AccountController {
         return accountDao.findAll();
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(path = "/balance/{id}", method = RequestMethod.GET)
+    public BigDecimal getBalance(@PathVariable long id) {
+        return accountDao.getAccount(id).getBalance();
+    }
+
     @RequestMapping(path = "/account/{id}", method = RequestMethod.GET)
     public Accounts getAccount(@PathVariable long id) {
         return accountDao.getAccount(id);

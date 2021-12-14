@@ -88,12 +88,9 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stud
-		for (Accounts account : accountService.getAllAccounts()) {
-			if (currentUser.getUser().getId() == account.getUser_id()) {
-				System.out.println("Your current balance is: $" + account.getBalance());
-			}
+		accountService.setAuthToken(currentUser.getToken());
+		System.out.println("Your current balance is: $" + accountService.getBalance(currentUser.getUser().getId()));
 		}
-	}
 
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub

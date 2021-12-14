@@ -12,4 +12,6 @@ public interface AccountDao {
     Accounts getAccount(long id);
 
     boolean updateBalance(BigDecimal amount, long id);
+
+    Accounts getBalance(long id);
 }
