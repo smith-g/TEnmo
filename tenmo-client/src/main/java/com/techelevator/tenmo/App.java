@@ -6,6 +6,8 @@ import com.techelevator.view.ConsoleService;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class App {
 
@@ -94,11 +96,19 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
+		Map<Long, String> users = new HashMap<>();
+		Map<Long, Long> accounts = new HashMap<>();
 		while (true){
 			for (Accounts account : accountService.getAllAccounts()) {
 				if (currentUser.getUser().getId() == account.getUser_id()) {
 					currentAccount = account;
 				}
+			}
+			for (User user: userService.getAllUser()){
+				users.put(user.getId(), user.getUsername());
+			}
+			for (Accounts account : accountService.getAllAccounts()){
+				accounts.put(account.getAccount_id(),account.getUser_id());
 			}
 			String choice = (String) console.getChoiceFromOptions(TRANSFER_OPTIONS);
 			if(TRANSFER_OPTIONS_ALL.equals(choice)){
@@ -109,10 +119,29 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 						System.out.println("-------------------------------------------");
 						System.out.println(transfer.getTransferID() + "         from:" + transfer.getAccountFrom() + "         $" + transfer.getAmount());
 						System.out.println(transfer.getTransferID() + "           to:" + transfer.getAccountTo() + "           $" + transfer.getAmount());
+						break;
 					}
 				}
-			}else exitProgram();
-
+			}else if(TRANSFER_OPTIONS_SPECIFIC.equals(choice)){
+				long transferId =  console.getUserInputInteger("Enter transfer id: ");
+				Transfer transfer = transferService.getTransfer(transferId);
+				if(users.containsKey(accounts.get(transfer.getAccountFrom())) && users.containsKey(accounts.get(transfer.getAccountTo()))){
+				    System.out.println("--------------------------------------");
+				    System.out.println("Transfer Details");
+				    System.out.println("---------------------------------------");
+				    System.out.println("Id: " + transfer.getTransferID());
+				    System.out.println("From: " + users.get(accounts.get(transfer.getAccountFrom())));
+				    System.out.println("To: " + users.get(accounts.get(transfer.getAccountTo())));
+				    System.out.println("Status: " + transfer.getTransferStatus());
+				    System.out.println("Amount: " + transfer.getAmount());
+					System.out.println();
+				    String exit = console.getUserInput("do you want to exit? press y: ");
+				    if(exit.equalsIgnoreCase("y")) {
+					break;
+				    }
+				}
+			}
+			exitProgram();
 		}
 		
 	}
