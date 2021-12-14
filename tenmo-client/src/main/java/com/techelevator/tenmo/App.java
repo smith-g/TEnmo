@@ -39,6 +39,8 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 	private UserService userService;
 	private AccountService accountService;
 	public TransferService transferService;
+	Map<Long, String> users = new HashMap<>();
+	Map<Long, Long> accounts = new HashMap<>();
 
 
 
@@ -94,20 +96,21 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
-		Map<Long, String> users = new HashMap<>();
-		Map<Long, Long> accounts = new HashMap<>();
 		while (true){
 			for (Accounts account : accountService.getAllAccounts()) {
-				if (currentUser.getUser().getId() == account.getUser_id()) {
+				if (currentUser.getUser().getId() == account.getUser_id()) { // match current user with respective account
 					currentAccount = account;
 				}
 			}
+
 			for (User user: userService.getAllUser()){
 				users.put(user.getId(), user.getUsername());
 			}
+
 			for (Accounts account : accountService.getAllAccounts()){
 				accounts.put(account.getAccount_id(),account.getUser_id());
 			}
+
 			String choice = (String) console.getChoiceFromOptions(TRANSFER_OPTIONS);
 			if(TRANSFER_OPTIONS_ALL.equals(choice)){
 
@@ -136,6 +139,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 				long transferId =  console.getUserInputInteger("Enter transfer id: ");
 				Transfer transfer = transferService.getTransfer(transferId);
+
 				if(users.containsKey(accounts.get(transfer.getAccountFrom())) && users.containsKey(accounts.get(transfer.getAccountTo()))){
 				    System.out.println("--------------------------------------");
 				    System.out.println("Transfer Details");
@@ -172,6 +176,9 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 			System.out.println(user.getId() + "          " + user.getUsername());
 		}
 		System.out.println("--------------------");
+
+		// create transfer and acquire both ID's
+
 		Accounts receivingAccount;
 		Accounts sendingAccount;
 		Transfer transfer = new Transfer();
@@ -188,6 +195,8 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 
 		Integer amount = console.getUserInputInteger("How many TE bucks would you like to send?");
 		transfer.setAmount(BigDecimal.valueOf(amount));
+
+		// update balances
 
 		for (Accounts account : accountService.getAllAccounts()) {
 			if (account.getUser_id() == sendingID) {
