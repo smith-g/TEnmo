@@ -119,7 +119,10 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 						System.out.println("-------------------------------------------");
 						System.out.println(transfer.getTransferID() + "         from:" + transfer.getAccountFrom() + "         $" + transfer.getAmount());
 						System.out.println(transfer.getTransferID() + "           to:" + transfer.getAccountTo() + "           $" + transfer.getAmount());
-						break;
+						String exit = console.getUserInput("do you want to exit? press y: ");
+						if(exit.equalsIgnoreCase("y")) {
+							break;
+						}
 					}
 				}
 			}else if(TRANSFER_OPTIONS_SPECIFIC.equals(choice)){
