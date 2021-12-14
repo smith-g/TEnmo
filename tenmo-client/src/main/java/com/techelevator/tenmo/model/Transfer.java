@@ -31,6 +31,15 @@ public class Transfer {
     }
 
     public long getTransferStatus() {
+        if (transferStatus == 2) {
+            System.out.println("APPROVED");
+        }
+        if (transferStatus == 1) {
+            System.out.println("PENDING");
+        }
+        if (transferStatus == 3) {
+            System.out.println("NOT APPROVED");
+        }
         return transferStatus;
     }
 
