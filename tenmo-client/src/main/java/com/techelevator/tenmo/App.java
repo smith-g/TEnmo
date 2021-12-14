@@ -121,8 +121,7 @@ private static final String API_BASE_URL = "http://localhost:8090/";
 				for(Transfer transfer : transferService.getAllTransfers()){
 					if(currentAccount.getAccount_id() == transfer.getAccountFrom() || currentAccount.getAccount_id() == transfer.getAccountTo()) {
 						System.out.println(transfer.getTransferID() + "         from:" + users.get(accounts.get(transfer.getAccountFrom())) + "         $" + transfer.getAmount());
-						System.out.println("\n");
-						System.out.println(transfer.getTransferID() + "           to:" + users.get(accounts.get(transfer.getAccountTo())) + "           $" + transfer.getAmount());
+						System.out.println(transfer.getTransferID() + "           to:" + users.get(accounts.get(transfer.getAccountTo())) + "         $" + transfer.getAmount());
 					}
 				}
 
